@@ -1,5 +1,5 @@
 <div>
-    <x-dialog-modal wire:model="confirmDeletion" maxWidth="lg">
+    <x-dt.dialog-modal wire:model="confirmDeletion" maxWidth="lg">
         <x-slot name="content">
             <div class="sm:flex sm:items-start">
                 <div
@@ -23,13 +23,13 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="$toggle('confirmDeletion')" wire:loading.attr="disabled">
+            <x-dt.action-button wire:click="$toggle('confirmDeletion')" wire:loading.attr="disabled" action="cancel">
                 {{ __('Cancel') }}
-            </x-jet-secondary-button>
+            </x-dt.action-button>
 
-            <x-button wire:click="delete" wire:loading.attr="disabled" class="ml-2" action="delete">
+            <x-dt.action-button wire:click="delete" wire:loading.attr="disabled" class="ml-2" action="delete">
                 Delete {{ $this->params['title'] ?? '' }}
-            </x-button>
+            </x-dt.action-button>
         </x-slot>
-    </x-dialog-modal>
+    </x-dt.dialog-modal>
 </div>

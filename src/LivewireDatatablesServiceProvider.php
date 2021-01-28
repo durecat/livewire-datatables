@@ -23,6 +23,7 @@ class LivewireDatatablesServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__.'/../resources/views/livewire/datatables', 'datatables');
         $this->loadViewsFrom(__DIR__.'/../resources/views/icons', 'icons');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views/components', 'components');
 
         Blade::component('icons::arrow-left', 'icons.arrow-left');
         Blade::component('icons::arrow-right', 'icons.arrow-right');
@@ -34,6 +35,11 @@ class LivewireDatatablesServiceProvider extends ServiceProvider
         Blade::component('icons::excel', 'icons.excel');
         Blade::component('icons::x-circle', 'icons.x-circle');
         Blade::component('icons::check-circle', 'icons.check-circle');
+        Blade::component('icons::plus-circle', 'icons.plus-circle');
+
+        Blade::component('components::dt-action-button', 'dt.action-button');
+        Blade::component('components::dt-modal', 'dt.modal');
+        Blade::component('components::dt-dialog-modal', 'dt.dialog-modal');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -43,6 +49,7 @@ class LivewireDatatablesServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../resources/views/livewire/datatables' => resource_path('views/livewire/datatables'),
                 __DIR__.'/../resources/views/icons' => resource_path('views/livewire/datatables/icons'),
+                __DIR__.'/../resources/views/components' => resource_path('views/livewire/datatables/components'),
             ], 'views');
 
             $this->commands([MakeDatatableCommand::class]);

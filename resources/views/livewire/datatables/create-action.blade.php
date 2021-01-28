@@ -1,5 +1,5 @@
 <div>
-    <x-dialog-modal wire:model="openCreateModal">
+    <x-dt.dialog-modal wire:model="openCreateModal">
         <x-slot name="title">
             Create New {{ $this->params['title'] ?? 'Item' }}
         </x-slot>
@@ -29,12 +29,12 @@
             </form>
         </x-slot>
         <x-slot name="footer">
-            <x-secondary-button wire:click="$toggle('openCreateModal')" wire:loading.attr="disabled">
+            <x-dt.action-button wire:click="$toggle('openCreateModal')" wire:loading.attr="disabled" action="cancel">
                 {{ __('Cancel') }}
-            </x-secondary-button>
-            <x-button wire:loading.attr="disabled" class="ml-2" action="create">
+            </x-dt.action-button>
+            <x-dt.action-button wire:loading.attr="disabled" class="ml-2" action="create">
                 Submit
-            </x-button>
+            </x-dt.action-button>
         </x-slot>
-    </x-dialog-modal>
+    </x-dt.dialog-modal>
 </div>

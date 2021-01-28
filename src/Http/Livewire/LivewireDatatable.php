@@ -20,13 +20,14 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Mediconesystems\LivewireDatatables\Traits\WithCallbacks;
 use Mediconesystems\LivewireDatatables\Exports\DatatableExport;
 use Mediconesystems\LivewireDatatables\Traits\WithCreateAction;
+use Mediconesystems\LivewireDatatables\Traits\WithEditAction;
 use Mediconesystems\LivewireDatatables\Traits\WithDeleteAction;
 use Mediconesystems\LivewireDatatables\Traits\WithPresetDateFilters;
 use Mediconesystems\LivewireDatatables\Traits\WithPresetTimeFilters;
 
 class LivewireDatatable extends Component
 {
-    use WithPagination, WithCallbacks, WithPresetDateFilters, WithPresetTimeFilters, WithCreateAction, WithDeleteAction;
+    use WithPagination, WithCallbacks, WithPresetDateFilters, WithPresetTimeFilters, WithCreateAction, WithEditAction, WithDeleteAction;
 
     const SEPARATOR = '|**lwdt**|';
     public $model;
@@ -53,9 +54,7 @@ class LivewireDatatable extends Component
     public $hideable;
     public $params;
     public $selected = [];
-    public $actions = []; // create, edit, delete
-    public $creatable;
-    public $enabledActions;
+    public $actions = []; // create, edit, delete    
     public $beforeTableSlot;
     public $afterTableSlot;
 
@@ -79,19 +78,21 @@ class LivewireDatatable extends Component
         $hideable = false,
         $beforeTableSlot = false,
         $afterTableSlot = false,
-        $creatable = true,
-        $enabledActions = true,
+        $actions = [],
         $params = []
     ) {
-        foreach (['model', 'include', 'exclude', 'hide', 'dates', 'times', 'searchable', 'sort', 'hideHeader', 'hidePagination', 'perPage', 'exportable', 'hideable', 'beforeTableSlot', 'afterTableSlot', 'creatable', 'enabledActions'] as $property) {
+        foreach (['model', 'include', 'exclude', 'hide', 'dates', 'times', 'searchable', 'sort', 'hideHeader', 'hidePagination', 'perPage', 'exportable', 'hideable', 'beforeTableSlot', 'afterTableSlot', 'actions'] as $property) {
             $this->$property = $this->$property ?? $$property;
         }
-
         $this->params = $params;
-
+        
         $this->columns = $this->getViewColumns();
 
         $this->initialiseSort();
+
+        if($this->enabledCreate()){
+            $this->initiateFields();
+        }
     }
 
     public function columns()
@@ -117,11 +118,6 @@ class LivewireDatatable extends Component
     {
         return $this->model::query();
     }
-
-    // public function delete($id)
-    // {
-    //     $this->model::destroy($id);
-    // }
 
     public function getProcessedColumnsProperty()
     {

@@ -53,7 +53,7 @@
                     </button>
                 </div>
                 @endif
-                @if($creatable)
+                @if($this->enabledCreate())
                 <div>
                     <button wire:click="showCreateModal"
                         class="flex items-center space-x-2 px-3 border border-blue-400 rounded-md bg-white text-blue-500 text-xs leading-4 font-medium uppercase tracking-wider hover:bg-blue-200 focus:outline-none">
@@ -78,7 +78,7 @@
                             </th>
                             @endif
                         @endforeach
-                        @if($enabledActions)
+                        @if($this->enabledEdit() || $this->enabledDelete())
                             <th class="px-4 py-3 bg-gray-50"></th>
                         @endif
                     </tr>
@@ -96,18 +96,22 @@
                             </td>
                             @endif
                         @endforeach
-                        @if($enabledActions)
+                        @if($this->enabledEdit() || $this->enabledDelete())
                             <td class="flex items-center space-x-2 justify-end px-4 py-3 whitespace-no-wrap text-sm">
-                                <button
+                                @if($this->enabledEdit())
+                                <button wire:click="showCreateModal({{ $result->id }})" wire:loading.attr="disabled"
                                     class="rounded border border-blue-500 text-blue-500 hover:text-blue-800 hover:bg-blue-200 focus:outline-none px-2 py-0.5">Edit</button>
+                                @endif
+                                @if($this->enabledDelete())
                                 <button wire:click="showDeleteModal({{ $result->id }})" wire:loading.attr="disabled"
                                     class="rounded border border-red-500 text-red-500 hover:text-red-800 hover:bg-red-200 focus:outline-none px-2 py-0.5">Delete</button>
+                                @endif
                             </td>
                         @endif
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="{{ sizeof($this->columns) + (int)$enabledActions }}"
+                        <td colspan="{{ sizeof($this->columns) + (int)($this->enabledEdit() || $this->enabledDelete()) }}"
                             class="px-5 py-3 whitespace-no-wrap">
                             There's nothing to show at the moment.
                         </td>
@@ -115,10 +119,10 @@
                     @endif
                 </tbody>
             </table>
-            @if($creatable)
+            @if($this->enabledCreate() || $this->enabledEdit())
                 @include('datatables::create-action')
             @endif
-            @if($enabledActions)
+            @if($this->enabledDelete())
                 @include('datatables::delete-action')
             @endif
         </div> <!-- end of table-area -->

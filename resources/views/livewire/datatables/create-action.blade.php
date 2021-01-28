@@ -1,27 +1,29 @@
 <div>
-    <x-dt.dialog-modal wire:model="openCreateModal">
+    <x-dt.dialog-modal wire:model="openCreateModal" maxWidth="xl">
         <x-slot name="title">
             Create New {{ $this->params['title'] ?? 'Item' }}
         </x-slot>
         <x-slot name="content">
-            @php
-            dump($this->columns)
-            @endphp
-            <form wire:submit.prevent="create" class="grid grid-cols-1 row-gap-6">
+            <form wire:submit.prevent="create" class="space-y-4 sm:space-y-0">
                 @foreach($this->columns as $column)
                 @if($column['input'])
-                <div>
-                    <label for="{{ $column['name'] }}">{{ $column['label'] }}</label>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+                    <label for="{{ $column['name'] }}" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">{{ $column['label'] }}</label>
                     @switch($column['input'])
                     @case('select')
-                    <select name="{{ $column['name'] }}" id="{{ $column['name'] }}">
-                        @foreach ($column['options'] as $option)
-                        <option value="{{ $option['value'] }}">{{ $option['label'] }}</option>
-                        @endforeach
-                    </select>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        <select name="{{ $column['name'] }}" id="{{ $column['name'] }}" class="max-w-lg block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                            @foreach ($column['options'] as $option)
+                            <option value="{{ $option['value'] }}">{{ $option['label'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     @break
                     @default
-                    <input type="{{ $column['input'] }}" name="{{ $column['name'] }}" id="{{ $column['name'] }}">
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {{-- wire:model="{{ $this->fields[$column['name']] }}" --}}
+                        <input wire:loading.attr="disabled" type="{{ $column['input'] }}" name="{{ $column['name'] }}" id="{{ $column['name'] }}" class="max-w-lg block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                    </div>
                     @endswitch
                 </div>
                 @endif

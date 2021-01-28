@@ -13,6 +13,11 @@ trait WithDeleteAction
         $this->confirmDeletion = true;
     }
 
+    public function enabledDelete()
+    {
+        return in_array('delete', $this->actions);
+    }
+
     public function delete()
     {
         $this->model::destroy($this->deleteTargetID);

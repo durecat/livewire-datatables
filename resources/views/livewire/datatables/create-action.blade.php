@@ -29,7 +29,7 @@
             </form>
         </x-slot>
         <x-slot name="footer">
-            <x-dt.action-button wire:click="$toggle('openCreateModal')" wire:loading.attr="disabled" action="cancel">
+            <x-dt.action-button type="button" wire:click="$toggle('openCreateModal')" wire:loading.attr="disabled" action="cancel">
                 {{ __('Cancel') }}
             </x-dt.action-button>
             <x-dt.action-button wire:loading.attr="disabled" class="ml-2" action="create">

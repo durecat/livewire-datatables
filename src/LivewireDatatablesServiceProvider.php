@@ -37,10 +37,10 @@ class LivewireDatatablesServiceProvider extends ServiceProvider
         Blade::component('icons::check-circle', 'icons.check-circle');
         Blade::component('icons::plus-circle', 'icons.plus-circle');
 
-        Blade::component('components::dt-action-button', 'dt.action-button');
-        Blade::component('components::dt-modal', 'dt.modal');
-        Blade::component('components::dt-dialog-modal', 'dt.dialog-modal');
-
+        Blade::component('components::action-button', 'dt.action-button');
+        Blade::component('components::modal', 'dt.modal');
+        Blade::component('components::dialog-modal', 'dt.dialog-modal');
+        
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/livewire-datatables.php' => config_path('livewire-datatables.php'),

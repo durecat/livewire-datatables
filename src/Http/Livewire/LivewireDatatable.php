@@ -3,28 +3,30 @@
 namespace Mediconesystems\LivewireDatatables\Http\Livewire;
 
 use Exception;
+use Livewire\Component;
+use Illuminate\View\View;
+use Illuminate\Support\Str;
+use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Database\Query\Expression;
+use Mediconesystems\LivewireDatatables\ColumnSet;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
-use Illuminate\Database\Query\Expression;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Illuminate\View\View;
-use Livewire\Component;
-use Livewire\WithPagination;
-use Maatwebsite\Excel\Facades\Excel;
-use Mediconesystems\LivewireDatatables\ColumnSet;
-use Mediconesystems\LivewireDatatables\Exports\DatatableExport;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Mediconesystems\LivewireDatatables\Traits\WithCallbacks;
+use Mediconesystems\LivewireDatatables\Exports\DatatableExport;
+use Mediconesystems\LivewireDatatables\Traits\WithCreateAction;
+use Mediconesystems\LivewireDatatables\Traits\WithDeleteAction;
 use Mediconesystems\LivewireDatatables\Traits\WithPresetDateFilters;
 use Mediconesystems\LivewireDatatables\Traits\WithPresetTimeFilters;
 
 class LivewireDatatable extends Component
 {
-    use WithPagination, WithCallbacks, WithPresetDateFilters, WithPresetTimeFilters;
+    use WithPagination, WithCallbacks, WithPresetDateFilters, WithPresetTimeFilters, WithCreateAction, WithDeleteAction;
 
     const SEPARATOR = '|**lwdt**|';
     public $model;
@@ -51,11 +53,15 @@ class LivewireDatatable extends Component
     public $hideable;
     public $params;
     public $selected = [];
+    public $actions = []; // create, edit, delete
+    public $creatable;
+    public $enabledActions;
     public $beforeTableSlot;
     public $afterTableSlot;
 
     protected $query;
     protected $listeners = ['refreshLivewireDatatable'];
+    protected $queryString = ['search'];
 
     public function mount(
         $model = null,
@@ -73,9 +79,11 @@ class LivewireDatatable extends Component
         $hideable = false,
         $beforeTableSlot = false,
         $afterTableSlot = false,
+        $creatable = true,
+        $enabledActions = true,
         $params = []
     ) {
-        foreach (['model', 'include', 'exclude', 'hide', 'dates', 'times', 'searchable', 'sort', 'hideHeader', 'hidePagination', 'perPage', 'exportable', 'hideable', 'beforeTableSlot', 'afterTableSlot'] as $property) {
+        foreach (['model', 'include', 'exclude', 'hide', 'dates', 'times', 'searchable', 'sort', 'hideHeader', 'hidePagination', 'perPage', 'exportable', 'hideable', 'beforeTableSlot', 'afterTableSlot', 'creatable', 'enabledActions'] as $property) {
             $this->$property = $this->$property ?? $$property;
         }
 
@@ -94,15 +102,9 @@ class LivewireDatatable extends Component
     public function getViewColumns()
     {
         return collect($this->freshColumns)->map(function ($column) {
-            return collect($column)->only([
-                'hidden',
-                'label',
-                'align',
-                'type',
-                'filterable',
-                'filterview',
-                'name',
-            ])->toArray();
+            $columns = ['hidden', 'label', 'align', 'type', 'input', 'filterable', 'filterview', 'name'];
+            if ($column['input'] === 'select') array_push($columns, 'options');
+            return collect($column)->only($columns)->toArray();
         })->toArray();
     }
 
@@ -116,10 +118,10 @@ class LivewireDatatable extends Component
         return $this->model::query();
     }
 
-    public function delete($id)
-    {
-        $this->model::destroy($id);
-    }
+    // public function delete($id)
+    // {
+    //     $this->model::destroy($id);
+    // }
 
     public function getProcessedColumnsProperty()
     {

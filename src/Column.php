@@ -26,6 +26,8 @@ class Column
     public $additionalSelects = [];
     public $filterView;
     public $align = 'left';
+    public $input;
+    public $options = [];
 
     public static function name($name)
     {
@@ -97,6 +99,20 @@ class Column
         return $this;
     }
 
+    public function input($input = "text")
+    {
+        $this->input = $input;
+
+        return $this;
+    }
+
+    public function options($options = null)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+    
     public function sortBy($column)
     {
         $this->sort = $column;

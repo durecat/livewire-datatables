@@ -19,15 +19,14 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Mediconesystems\LivewireDatatables\Traits\WithCallbacks;
 use Mediconesystems\LivewireDatatables\Exports\DatatableExport;
-use Mediconesystems\LivewireDatatables\Traits\WithCreateAction;
-use Mediconesystems\LivewireDatatables\Traits\WithEditAction;
+use Mediconesystems\LivewireDatatables\Traits\WithCreateOrEditAction;
 use Mediconesystems\LivewireDatatables\Traits\WithDeleteAction;
 use Mediconesystems\LivewireDatatables\Traits\WithPresetDateFilters;
 use Mediconesystems\LivewireDatatables\Traits\WithPresetTimeFilters;
 
 class LivewireDatatable extends Component
 {
-    use WithPagination, WithCallbacks, WithPresetDateFilters, WithPresetTimeFilters, WithCreateAction, WithEditAction, WithDeleteAction;
+    use WithPagination, WithCallbacks, WithPresetDateFilters, WithPresetTimeFilters, WithCreateOrEditAction, WithDeleteAction;
 
     const SEPARATOR = '|**lwdt**|';
     public $model;
@@ -55,6 +54,7 @@ class LivewireDatatable extends Component
     public $params;
     public $selected = [];
     public $actions = []; // create, edit, delete    
+    public $table;
     public $beforeTableSlot;
     public $afterTableSlot;
 
@@ -90,9 +90,7 @@ class LivewireDatatable extends Component
 
         $this->initialiseSort();
 
-        if($this->enabledCreate()){
-            $this->initiateFields();
-        }
+        $this->table = $this->builder()->getModel()->getTable();
     }
 
     public function columns()
@@ -104,7 +102,11 @@ class LivewireDatatable extends Component
     {
         return collect($this->freshColumns)->map(function ($column) {
             $columns = ['hidden', 'label', 'align', 'type', 'input', 'filterable', 'filterview', 'name'];
-            if ($column['input'] === 'select') array_push($columns, 'options');
+
+            if ($column['input'] === 'select') {
+                array_push($columns, 'options');
+            }
+
             return collect($column)->only($columns)->toArray();
         })->toArray();
     }
@@ -116,6 +118,7 @@ class LivewireDatatable extends Component
 
     public function builder()
     {
+        dd($this->users);
         return $this->model::query();
     }
 

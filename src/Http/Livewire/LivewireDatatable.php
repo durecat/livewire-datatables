@@ -91,6 +91,7 @@ class LivewireDatatable extends Component
         $this->initialiseSort();
 
         $this->table = $this->builder()->getModel()->getTable();
+        $this->{$this->table} = new $this->model;
     }
 
     public function columns()

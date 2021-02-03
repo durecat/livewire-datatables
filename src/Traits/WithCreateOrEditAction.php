@@ -16,7 +16,7 @@ trait WithCreateOrEditAction
             $this->{$this->table} = $this->model::findOrFail($id);
         } else {
             $this->editingMode = "create";
-            $this->{$this->table} = new $this->model;
+            // $this->{$this->table} = new $this->model;
         }
         $this->openCreateModal = true;
     }

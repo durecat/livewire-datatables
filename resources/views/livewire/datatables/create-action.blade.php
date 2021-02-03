@@ -8,12 +8,19 @@
                 @foreach($this->columns as $column)
                 @if($column['input'])
                     @switch($column['input'])
+                    @case('search')
+                        <x-dt.select :column="$column" :table="$table" />
+                        {{-- @include('datatables::search-dropdown', [ 'column' => $column, 'table' => $table ]) --}}
+                    @break;
                     @case('select')
                         <x-dt.select :column="$column" :table="$table"/>
                     @break
                     @case('textarea')
                         <x-dt.textarea :column="$column" :table="$table"/>
                     @break
+                    @case('checkbox')
+                        <x-dt.checkbox :column="$column" :table="$table" />
+                    @break;
                     @default
                         <x-dt.input :column="$column" :table="$table"/>
                     @endswitch

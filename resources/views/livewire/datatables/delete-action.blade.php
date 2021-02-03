@@ -15,7 +15,11 @@
                         Delete {{ $this->params['title'] ?? '' }}
                     </h3>
                     <div class="mt-2">
-                        <p>{{ $this->params['message']['delete'] ?? 'Are you sure you want to delete this?' }}</p>
+                        <p>
+                            {{ isset($this->params['title']) 
+                                ? 'Are you sure you want to delete this '.$this->params['title'].'? Once the '.$this->params['title'].' is deleted, all of its resources and data will be permanently deleted.'
+                                : 'Are you sure you want to delete this?' }}
+                        </p>
                     </div>
                 </div>
             </div>

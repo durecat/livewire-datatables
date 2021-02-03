@@ -43,6 +43,8 @@ class LivewireDatatablesServiceProvider extends ServiceProvider
         Blade::component('components::input', 'dt.input');
         Blade::component('components::select', 'dt.select');
         Blade::component('components::textarea', 'dt.textarea');
+        Blade::component('components::checkbox', 'dt.checkbox');
+        Blade::component('components::search', 'dt.search');
         
         if ($this->app->runningInConsole()) {
             $this->publishes([

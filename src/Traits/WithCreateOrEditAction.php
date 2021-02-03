@@ -49,4 +49,9 @@ trait WithCreateOrEditAction
         $this->resetErrorBag();
         $this->{$this->table} = new $this->model;
     }
+
+    public function rules()
+    {
+        return $this->{$this->table}->rules();
+    }
 }

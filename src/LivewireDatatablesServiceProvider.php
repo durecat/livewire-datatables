@@ -42,6 +42,7 @@ class LivewireDatatablesServiceProvider extends ServiceProvider
         Blade::component('components::dialog-modal', 'dt.dialog-modal');
         Blade::component('components::input', 'dt.input');
         Blade::component('components::select', 'dt.select');
+        Blade::component('components::textarea', 'dt.textarea');
         
         if ($this->app->runningInConsole()) {
             $this->publishes([

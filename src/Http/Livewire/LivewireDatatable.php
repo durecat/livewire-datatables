@@ -119,7 +119,6 @@ class LivewireDatatable extends Component
 
     public function builder()
     {
-        dd($this->users);
         return $this->model::query();
     }
 

@@ -11,6 +11,9 @@
                     @case('select')
                         <x-dt.select :column="$column" :table="$table"/>
                     @break
+                    @case('textarea')
+                        <x-dt.textarea :column="$column" :table="$table"/>
+                    @break
                     @default
                         <x-dt.input :column="$column" :table="$table"/>
                     @endswitch

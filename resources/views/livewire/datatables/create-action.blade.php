@@ -4,7 +4,7 @@
             {{ ucFirst($this->editingMode) }} {{ $this->params['title'] ?? 'Item' }}
         </x-slot>
         <x-slot name="content">
-            <form wire:submit.prevent="create" class="space-y-4 sm:space-y-0">
+            <form wire:submit.prevent="create" class="space-y-4 sm:space-y-0" autocomplete="off">
                 @foreach($this->columns as $column)
                 @if($column['input'])
                     @switch($column['input'])

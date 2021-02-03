@@ -16,15 +16,15 @@
                     @endswitch
                 @endif
                 @endforeach
+            </form>
         </x-slot>
         <x-slot name="footer">
             <x-dt.action-button type="reset" wire:click="cancel" wire:loading.attr="disabled" action="cancel">
                 {{ __('Cancel') }}
             </x-dt.action-button>
-            <x-dt.action-button wire:loading.attr="disabled" action="create" class="ml-2">
+            <x-dt.action-button wire:click="create" wire:loading.attr="disabled" action="create" class="ml-2">
                 Submit
             </x-dt.action-button>
-        </form>
         </x-slot>
     </x-dt.dialog-modal>
 </div>

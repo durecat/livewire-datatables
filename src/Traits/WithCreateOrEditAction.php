@@ -11,6 +11,7 @@ trait WithCreateOrEditAction
 
     public function showCreateModal($id=null)
     {
+        dump('showCreateModal: '.$id.'///');
         if($id){
             $this->editingMode = "edit";
             $this->{$this->table} = $this->model::findOrFail($id);

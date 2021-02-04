@@ -3,7 +3,7 @@
 
 <x-dt.modal :id="$id" :maxWidth="$maxWidth" {{ $attributes }}>
     <div class="px-6 py-4">
-        <div class="text-lg">
+        <div class="text-lg border-b border-gray-200 pb-4 pt-2">
             {{ $title }}
         </div>
 

@@ -5,8 +5,7 @@
     </div>
     @endif
     <div class="relative">
-        <div
-            class="table-search-actions flex flex-col-reverse sm:flex-row items-center sm:justify-between space-y-reverse space-y-2 sm:space-y-0">
+        <div class="table-search-actions flex flex-col-reverse sm:flex-row items-center sm:justify-between space-y-reverse space-y-2 sm:space-y-0">
             <div class="table-search-perpages flex items-center space-x-2 w-full sm:w-1/3">
                 @if($this->results[1])
                 <select wire:model="perPage" name="perPage"
@@ -120,7 +119,11 @@
                 </tbody>
             </table>
             @if($this->enabledCreate() || $this->enabledEdit())
-                @include('datatables::create-action')
+                @if($customizeCreateForm)
+                    @include($customizeCreateForm)
+                @else
+                    @include('datatables::create-action')
+                @endif
             @endif
             @if($this->enabledDelete())
                 @include('datatables::delete-action')
@@ -133,6 +136,7 @@
         </div>
         @endif
     </div>
+
     @if($afterTableSlot)
     <div class="mt-8">
         @include($afterTableSlot)

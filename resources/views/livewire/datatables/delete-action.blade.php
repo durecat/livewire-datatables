@@ -1,5 +1,8 @@
 <div>
     <x-dt.dialog-modal wire:model="confirmDeletion" maxWidth="lg">
+        <x-slot name="title">
+            Delete {{ $this->params['title'] ?? '' }}
+        </x-slot>
         <x-slot name="content">
             <div class="sm:flex sm:items-start">
                 <div
@@ -11,16 +14,11 @@
                     </svg>
                 </div>
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 class="text-lg leading-6 font-semibold text-gray-900" id="modal-headline">
-                        Delete {{ $this->params['title'] ?? '' }}
-                    </h3>
-                    <div class="mt-2">
-                        <p>
-                            {{ isset($this->params['title']) 
-                                ? 'Are you sure you want to delete this '.$this->params['title'].'? Once the '.$this->params['title'].' is deleted, all of its resources and data will be permanently deleted.'
-                                : 'Are you sure you want to delete this?' }}
-                        </p>
-                    </div>
+                    <p>
+                        {{ isset($this->params['title']) 
+                            ? 'Are you sure you want to delete this '.$this->params['title'].'? Once the '.$this->params['title'].' is deleted, all of its resources and data will be permanently deleted.'
+                            : 'Are you sure you want to delete this?' }}
+                    </p>
                 </div>
             </div>
         </x-slot>

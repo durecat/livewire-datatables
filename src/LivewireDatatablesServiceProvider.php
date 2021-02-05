@@ -40,6 +40,7 @@ class LivewireDatatablesServiceProvider extends ServiceProvider
         Blade::component('components::action-button', 'dt.action-button');
         Blade::component('components::modal', 'dt.modal');
         Blade::component('components::dialog-modal', 'dt.dialog-modal');
+        Blade::component('components::form-input', 'dt.form-input');
         Blade::component('components::input', 'dt.input');
         Blade::component('components::select', 'dt.select');
         Blade::component('components::textarea', 'dt.textarea');

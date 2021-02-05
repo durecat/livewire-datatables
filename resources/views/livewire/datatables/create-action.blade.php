@@ -6,25 +6,9 @@
         <x-slot name="content">
             <form wire:submit.prevent="create" class="space-y-4 sm:space-y-0" autocomplete="off">
                 @foreach($this->columns as $column)
-                @if($column['input'])
-                    @switch($column['input'])
-                    @case('search')
-                        <x-dt.select :column="$column" :table="$table" />
-                        {{-- @include('datatables::search-dropdown', [ 'column' => $column, 'table' => $table ]) --}}
-                    @break;
-                    @case('select')
-                        <x-dt.select :column="$column" :table="$table"/>
-                    @break
-                    @case('textarea')
-                        <x-dt.textarea :column="$column" :table="$table"/>
-                    @break
-                    @case('checkbox')
-                        <x-dt.checkbox :column="$column" :table="$table" />
-                    @break;
-                    @default
-                        <x-dt.input :column="$column" :table="$table"/>
-                    @endswitch
-                @endif
+                    @if($column['input'])
+                        <x-dt.form-input :column="$column" />
+                    @endif
                 @endforeach
             </form>
         </x-slot>

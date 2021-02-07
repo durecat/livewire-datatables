@@ -87,8 +87,7 @@ class LivewireDatatable extends Component
 
         $this->initialiseSort();
 
-        $this->table = $this->builder()->getModel()->getTable();
-        $this->{$this->table} = new $this->model;
+        $this->table = $this->builder()->getModel()->getTable();        
     }
 
     public function columns()
@@ -99,7 +98,7 @@ class LivewireDatatable extends Component
     public function getViewColumns()
     {
         return collect($this->freshColumns)->map(function ($column) {
-            $columns = ['hidden', 'label', 'align', 'type', 'input', 'filterable', 'filterview', 'name'];
+            $columns = ['hidden', 'label', 'align', 'type', 'input', 'filterable', 'filterview', 'name', 'class'];
 
             if (in_array($column['input'], ['select', 'checkbox'])) {
                 array_push($columns, 'options');

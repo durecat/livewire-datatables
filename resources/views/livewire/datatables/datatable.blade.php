@@ -29,7 +29,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </div>
-                        <input wire:model.debounce.500ms="search" type="search" id="search"
+                        <input wire:ignore wire:model.debounce.500ms="search" type="search" id="search"
                             class="block border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full pl-8 sm:text-sm shadow-sm rounded-md"
                             placeholder="Search in {{ str_replace('_', ' ', $this->searchableColumns()->map->label->join(', ')) }}" />
                         {{-- placeholder="Search" /> --}}
@@ -64,7 +64,7 @@
             </div><!-- end of table-actions -->
         </div><!-- end of table-search-actions -->
 
-        <div class="table-area shadow overflow-x-scroll sm:overflow-x-auto border-b border-gray-200 sm:rounded-lg mt-4">
+        <div class="table-area shadow overflow-x-scroll sm:overflow-visible border-b border-gray-200 sm:rounded-lg mt-4">
             <table class="min-w-full divide-y divide-gray-200">
                 @unless($this->hideHeader)
                 <thead>
@@ -72,7 +72,7 @@
                         @foreach($this->columns as $index => $column)
                             @if(!$column['hidden'])
                             <th
-                                class="px-4 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider">
+                                class="px-4 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 tracking-wider {{ $column['class'] }}">
                                 @include("datatables::header-no-hide", ['column' => $column, 'sort' => $sort])
                             </th>
                             @endif
@@ -88,7 +88,7 @@
                     <tr class="hover:bg-gray-100">
                         @foreach($this->columns as $column)
                             @if(!$column['hidden'])
-                            <td class="px-4 py-3 whitespace-no-wrap">
+                            <td class="px-4 py-3 whitespace-no-wrap text-{{ $column['align'] }}">
                                 <div class="text-sm leading-5 text-gray-900">
                                     {!! $result->{$column['name']} !!}
                                 </div>

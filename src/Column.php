@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 class Column
 {
     public $type = 'string';
+    public $class;
     public $label;
     public $name;
     public $select;
@@ -90,6 +91,13 @@ class Column
         return static::callback($name, function ($value) {
             return view('datatables::delete', ['value' => $value]);
         });
+    }
+
+    public function class($class = '')
+    {
+        $this->class = $class;
+        
+        return $this;
     }
 
     public function label($label)

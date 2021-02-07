@@ -16,7 +16,7 @@ trait WithCreateOrEditAction
             $this->{$this->table} = $this->model::findOrFail($id);
         } else {
             $this->editingMode = "create";
-            // $this->{$this->table} = new $this->model;
+            $this->{$this->table} = new $this->model;
         }
         $this->openCreateModal = true;
     }
@@ -52,6 +52,9 @@ trait WithCreateOrEditAction
 
     public function rules()
     {
+        if (is_null($this->{$this->table})) 
+            return ['search' => 'min:3|max:191'];
+
         return $this->{$this->table}->rules();
     }
 }

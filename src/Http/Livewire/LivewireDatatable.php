@@ -52,6 +52,7 @@ class LivewireDatatable extends Component
     public $table;
     public $beforeTableSlot;
     public $afterTableSlot;
+    public $addtionalSearch;
     public $customizeCreateForm;
 
     protected $query;
@@ -75,20 +76,25 @@ class LivewireDatatable extends Component
         $actions = [],
         $beforeTableSlot = false,
         $afterTableSlot = false,
+        $addtionalSearch = false,
         $customizeCreateForm = false,
         $params = []
     ) {
-        foreach (['model', 'include', 'exclude', 'hide', 'dates', 'times', 'searchable', 'sort', 'hideHeader', 'hidePagination', 'perPage', 'exportable','hideable', 'actions', 'beforeTableSlot', 'afterTableSlot', 'customizeCreateForm'] as $property) {
+        foreach (['model', 'include', 'exclude', 'hide', 'dates', 'times', 'searchable', 'sort', 'hideHeader', 'hidePagination', 'perPage', 'exportable','hideable', 'actions', 'beforeTableSlot', 'afterTableSlot', 'addtionalSearch', 'customizeCreateForm'] as $property) {
             $this->$property = $this->$property ?? $$property;
         }
         $this->params = $params;
         
+        $this->table = $this->builder()->getModel()->getTable();
+        
+        $this->setExtraProperties();
+
         $this->columns = $this->getViewColumns();
 
         $this->initialiseSort();
-
-        $this->table = $this->builder()->getModel()->getTable();        
     }
+
+    public function setExtraProperties(){}
 
     public function columns()
     {

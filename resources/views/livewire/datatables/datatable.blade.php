@@ -6,10 +6,10 @@
     @endif
     <div class="relative">
         <div class="table-search-actions flex flex-col-reverse sm:flex-row items-center sm:justify-between space-y-reverse space-y-2 sm:space-y-0">
-            <div class="table-search-perpages flex items-center space-x-2 w-full sm:w-1/3">
+            <div class="table-search-perpages grid grid-cols-3 sm:flex items-center sm:space-x-2 w-full {{ $this->addtionalSearch ? 'sm:w-1/2' : 'sm:w-1/3' }}">
                 @if($this->results[1])
                 <select wire:model="perPage" name="perPage"
-                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-1/4">
+                    class="col-span-1 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm sm:text-sm">
                     <option value="10">10</option>
                     <option value="25">25</option>
                     <option value="50">50</option>
@@ -18,8 +18,12 @@
                 </select>
                 @endif
 
+                @if($this->addtionalSearch)
+                    @include($this->addtionalSearch)
+                @endif
+
                 @if($this->searchableColumns()->count())
-                <div class="flex rounded-md shadow-sm w-3/4">
+                <div class="flex rounded-md shadow-sm {{ $this->addtionalSearch ? 'sm:w-1/2 col-span-3' : 'sm:w-3/4 col-span-2' }} ">
                     <label for="search" class="sr-only">Search</label>
                     <div class="relative flex items-stretch flex-grow focus-within:z-10">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

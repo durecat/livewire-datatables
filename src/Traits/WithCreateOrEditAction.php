@@ -52,8 +52,12 @@ trait WithCreateOrEditAction
 
     public function rules()
     {
-        if (is_null($this->{$this->table})) 
-            return ['search' => 'min:3|max:191'];
+        if (is_null($this->{$this->table})) { 
+            return [
+                'perPage' => 'sometimes',
+                'search' => 'min:3|max:191',
+            ];
+        }
 
         return $this->{$this->table}->rules();
     }

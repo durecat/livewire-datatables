@@ -4,12 +4,12 @@
         @include($beforeTableSlot)
     </div>
     @endif
-    <div class="relative">
+    {{-- <div class="relative"> --}}
         <div class="table-search-actions flex flex-col-reverse sm:flex-row items-center sm:justify-between space-y-reverse space-y-2 sm:space-y-0">
             <div class="table-search-perpages grid grid-cols-3 sm:flex items-center sm:space-x-2 w-full {{ $this->addtionalSearch ? 'sm:w-1/2' : 'sm:w-1/3' }}">
                 @if($this->results[1])
                 <select wire:model="perPage" name="perPage"
-                    class="col-span-1 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm sm:text-sm">
+                    class="col-span-1 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm text-sm">
                     <option value="10">10</option>
                     <option value="25">25</option>
                     <option value="50">50</option>
@@ -34,7 +34,7 @@
                             </svg>
                         </div>
                         <input wire:ignore wire:model.debounce.500ms="search" type="search" id="search"
-                            class="block border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full pl-8 sm:text-sm shadow-sm rounded-md"
+                            class="block border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full pl-8 text-sm shadow-sm rounded-md"
                             placeholder="Search in {{ str_replace('_', ' ', $this->searchableColumns()->map->label->join(', ')) }}" />
                         {{-- placeholder="Search" /> --}}
                     </div>
@@ -139,7 +139,7 @@
             {{ $this->results->links() }}
         </div>
         @endif
-    </div>
+    {{-- </div> --}}
 
     @if($afterTableSlot)
     <div class="mt-8">

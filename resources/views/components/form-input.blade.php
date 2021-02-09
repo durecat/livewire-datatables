@@ -1,6 +1,6 @@
 @props([ 'column' ])
 
-<div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+<div {{ $attributes->merge(["class" => " sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5"]) }}>
     <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2 uppercase">
         {{ str_replace("_", " ", $column['label'] ?? $column['name']) }}
     </label>

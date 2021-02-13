@@ -29,6 +29,7 @@ class Column
     public $align = 'left';
     public $input;
     public $options = [];
+    public $events;
 
     public static function name($name)
     {
@@ -121,6 +122,13 @@ class Column
         return $this;
     }
     
+    public function events($events=null)
+    {
+        $this->events = $events;
+
+        return $this;
+    }
+
     public function sortBy($column)
     {
         $this->sort = $column;

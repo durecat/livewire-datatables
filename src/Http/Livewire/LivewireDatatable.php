@@ -104,7 +104,7 @@ class LivewireDatatable extends Component
     public function getViewColumns()
     {
         return collect($this->freshColumns)->map(function ($column) {
-            $columns = ['hidden', 'label', 'align', 'type', 'input', 'filterable', 'filterview', 'name', 'class'];
+            $columns = ['hidden', 'label', 'align', 'type', 'input', 'filterable', 'filterview', 'name', 'class', 'events'];
 
             if (in_array($column['input'], ['select', 'checkbox'])) {
                 array_push($columns, 'options');

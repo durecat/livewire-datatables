@@ -19,13 +19,19 @@
         "php": "^7.2.5|^8.0",
         "illuminate/support": "^7.0|^8.0",
         "livewire/livewire": "^1.2|^2.0",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "dev-rowFormats"
     },
     "require-dev": {
         "laravel/legacy-factories": "^1.0.4",
         "orchestra/testbench": "^4.0|5.0|6.0",
         "phpunit/phpunit": "^8.0|9.0"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/durecat/Laravel-Excel"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Mediconesystems\\LivewireDatatables\\": "src"

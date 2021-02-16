@@ -106,7 +106,7 @@
                                     class="rounded border border-blue-500 text-blue-500 hover:text-blue-800 hover:bg-blue-200 focus:outline-none px-2 py-0.5">Edit</button>
                                 @endif
                                 @if($this->enabledDelete())
-                                <button wire:click="showDeleteModal({{ $result->id }})" wire:loading.attr="disabled"
+                                <button wire:click="showDeleteModal('{{ $result->id }}')" wire:loading.attr="disabled"
                                     class="rounded border border-red-500 text-red-500 hover:text-red-800 hover:bg-red-200 focus:outline-none px-2 py-0.5">Delete</button>
                                 @endif
                             </td>

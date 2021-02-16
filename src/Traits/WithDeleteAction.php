@@ -24,4 +24,5 @@ trait WithDeleteAction
         $this->deleteTargetID = null;
         $this->confirmDeletion = false;
     }
+    
 }

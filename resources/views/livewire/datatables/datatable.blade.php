@@ -4,11 +4,11 @@
         @include($beforeTableSlot)
     </div>
     @endif
-    {{-- <div class="relative"> --}}
+    <div>
         <div class="table-search-actions flex flex-col-reverse sm:flex-row items-center sm:justify-between space-y-reverse space-y-2 sm:space-y-0">
             <div class="table-search-perpages grid grid-cols-3 sm:flex items-center sm:space-x-2 w-full {{ $this->addtionalSearch ? 'sm:w-1/2' : 'sm:w-1/3' }}">
                 @if($this->results[1])
-                <select wire:model="perPage" name="perPage"
+                <select wire:ignore wire:model="perPage" name="perPage"
                     class="col-span-1 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm text-sm">
                     <option value="10">10</option>
                     <option value="25">25</option>
@@ -36,7 +36,6 @@
                         <input wire:ignore wire:model.debounce.500ms="search" type="search" id="search"
                             class="block border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full pl-8 text-sm shadow-sm rounded-md"
                             placeholder="Search in {{ str_replace('_', ' ', $this->searchableColumns()->map->label->join(', ')) }}" />
-                        {{-- placeholder="Search" /> --}}
                     </div>
                 </div>
                 @endif
@@ -100,15 +99,20 @@
                             @endif
                         @endforeach
                         @if($this->enabledEdit() || $this->enabledDelete())
-                            <td class="flex items-center space-x-2 justify-end px-4 py-3 whitespace-no-wrap text-sm">
-                                @if($this->enabledEdit())
-                                <button wire:click="showCreateModal({{ $result->id }})" wire:loading.attr="disabled"
-                                    class="rounded border border-blue-500 text-blue-500 hover:text-blue-800 hover:bg-blue-200 focus:outline-none px-2 py-0.5">Edit</button>
-                                @endif
-                                @if($this->enabledDelete())
-                                <button wire:click="showDeleteModal('{{ $result->id }}')" wire:loading.attr="disabled"
-                                    class="rounded border border-red-500 text-red-500 hover:text-red-800 hover:bg-red-200 focus:outline-none px-2 py-0.5">Delete</button>
-                                @endif
+                            <td class="px-4 py-3 whitespace-no-wrap text-sm">
+                                <div class="flex items-center space-x-2 justify-end">
+                                    @if($this->additionalButtons)
+                                        @include($this->additionalButtons, ['id' => $result->id])
+                                    @endif
+                                    @if($this->enabledEdit())
+                                    <button wire:click="showCreateModal({{ $result->id }})" wire:loading.attr="disabled"
+                                        class="rounded border border-blue-500 text-blue-500 hover:text-blue-800 hover:bg-blue-200 focus:outline-none px-2 py-0.5">Edit</button>
+                                    @endif
+                                    @if($this->enabledDelete())
+                                    <button wire:click="showDeleteModal('{{ $result->id }}')" wire:loading.attr="disabled"
+                                        class="rounded border border-red-500 text-red-500 hover:text-red-800 hover:bg-red-200 focus:outline-none px-2 py-0.5">Delete</button>
+                                    @endif
+                                </div>
                             </td>
                         @endif
                     </tr>
@@ -122,16 +126,20 @@
                     @endif
                 </tbody>
             </table>
-            @if($this->enabledCreate() || $this->enabledEdit())
-                @if($customizeCreateForm)
-                    @include($customizeCreateForm)
-                @else
-                    @include('datatables::create-action')
+            <div>
+                @if($this->enabledCreate() || $this->enabledEdit())
+                    @if($customizeCreateForm)
+                        @include($customizeCreateForm)
+                    @else
+                        @include('datatables::create-action')
+                    @endif
                 @endif
-            @endif
-            @if($this->enabledDelete())
-                @include('datatables::delete-action')
-            @endif
+            </div>
+            <div>
+                @if($this->enabledDelete())
+                    @include('datatables::delete-action')
+                @endif
+            </div>
         </div> <!-- end of table-area -->
 
         @unless($this->hidePagination)
@@ -139,10 +147,10 @@
             {{ $this->results->links() }}
         </div>
         @endif
-    {{-- </div> --}}
+    </div>
 
     @if($afterTableSlot)
-    <div class="mt-8">
+    <div>
         @include($afterTableSlot)
     </div>
     @endif

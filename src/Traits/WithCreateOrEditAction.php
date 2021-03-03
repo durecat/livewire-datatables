@@ -33,6 +33,9 @@ trait WithCreateOrEditAction
 
     public function updated($propertyName)
     {
+        // dd($propertyName);
+        if( in_array($propertyName, ['perPage', 'search_company', 'search', 'confirmDeletion'])) return true;
+
         $this->validateOnly($propertyName);
     }
 

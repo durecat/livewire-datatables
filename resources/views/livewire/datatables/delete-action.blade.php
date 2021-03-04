@@ -1,7 +1,10 @@
 <div>
     <x-dt.dialog-modal wire:model="confirmDeletion" maxWidth="lg">
         <x-slot name="title">
-            Delete {{ $this->params['title'] ?? '' }}
+            <div class="flex items-center justify-between">
+                <span>Delete {{ $this->params['title'] ?? '' }}</span>
+                <button type="button" wire:click="$toggle('confirmDeletion')" wire:loading.attr="disabled" action="cancel" class="text-gray-700 hover:text-gray-500 focus:outline-none active:text-gray-800 active:bg-gray-50 font-semibold text-xl">&times;</button>
+            </div>
         </x-slot>
         <x-slot name="content">
             <div class="sm:flex sm:items-start">

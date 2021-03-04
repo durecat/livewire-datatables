@@ -1,7 +1,10 @@
 <div>
     <x-dt.dialog-modal wire:model="openCreateModal" maxWidth="xl">
         <x-slot name="title">
-            {{ ucFirst($this->editingMode) }} {{ $this->params['title'] ?? 'Item' }}
+            <div class="flex items-center justify-between">
+                <span>{{ ucFirst($this->editingMode) }} {{ $this->params['title'] ?? 'Item' }}</span>
+                <button type="reset" wire:click="cancel" wire:loading.attr="disabled" action="cancel" class="text-gray-700 hover:text-gray-500 focus:outline-none active:text-gray-800 active:bg-gray-50 font-semibold text-xl">&times;</button>
+            </div>
         </x-slot>
         <x-slot name="content">
             <form wire:submit.prevent="create" class="space-y-4 sm:space-y-0" autocomplete="off">

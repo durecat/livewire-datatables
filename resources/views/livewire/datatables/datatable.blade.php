@@ -6,7 +6,7 @@
     @endif
     <div>
         <div class="table-search-actions flex flex-col-reverse sm:flex-row items-center sm:justify-between space-y-reverse space-y-2 sm:space-y-0">
-            <div class="table-search-perpages grid grid-cols-3 sm:flex items-center sm:space-x-2 w-full {{ $this->addtionalSearch ? 'sm:w-1/2' : 'sm:w-1/3' }}">
+            <div class="table-search-perpages grid grid-cols-3 sm:flex items-center sm:space-x-2 w-full {{ !($exportable || $this->enabledCreate()) ? '' : ($this->addtionalSearch ? 'sm:w-1/2' : 'sm:w-1/3') }}">
                 @if($this->results[1])
                 <select wire:ignore wire:model="perPage" name="perPage"
                     class="col-span-1 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm text-sm">
@@ -41,6 +41,7 @@
                 @endif
             </div><!-- end of table-search-perpages -->
 
+            @if($exportable || $this->enabledCreate())
             <div class="table-actions flex items-center justify-end space-x-2 w-full sm:w-2/3">
                 <x-icons.cog wire:loading class="h-9 w-9 animate-spin text-gray-400" />
 
@@ -65,6 +66,7 @@
                 </div>
                 @endif
             </div><!-- end of table-actions -->
+            @endif
         </div><!-- end of table-search-actions -->
 
         <div class="table-area shadow overflow-x-scroll sm:overflow-visible border-b border-gray-200 sm:rounded-lg mt-4">
